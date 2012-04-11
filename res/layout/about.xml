@@ -23,20 +23,36 @@
 		android:textAppearance="?android:attr/textAppearanceLarge"
 		android:gravity="center"  />
 
-    <Button
-        android:id="@+id/home_doctor_button"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/home_login"
-        android:textSize="35sp" />
-
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight=".15"
         android:text="@string/space" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".6"
+        android:gravity="center"
+        android:text="@string/about_info"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".6"
+        android:gravity="center"
+        android:text="@string/about_ack"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".6"
+        android:gravity="center"
+        android:text="@string/about_version"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/textView2"
@@ -46,11 +62,11 @@
         android:text="@string/space" />
        
 	<Button
-        android:id="@+id/home_about_button"
+        android:id="@+id/about_back_button"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight=".5"
-        android:text="@string/home_about"
+        android:text="@string/back"
 		android:textSize="35sp"  />
     
 </LinearLayout>
