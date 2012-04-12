@@ -29,7 +29,7 @@
 		android:textAppearance="?android:attr/textAppearanceLarge" />
 
 	<EditText
-		android:id="@+id/username"
+		android:id="@+id/login_username"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:inputType="textEmailAddress" >
@@ -58,14 +58,14 @@
 		android:orientation="horizontal" >
 
 		<EditText
-			android:id="@+id/password"
+			android:id="@+id/login_password"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_weight="1"
 			android:inputType="textPassword" />
 
 		<Button
-			android:id="@+id/submitButton"
+			android:id="@+id/login_submit_button"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:text="@string/home_login" />
