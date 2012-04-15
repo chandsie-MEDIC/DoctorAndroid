@@ -25,6 +25,9 @@
 		<activity
 			android:label="@string/home_login"
 			android:name=".Login" />
+		<activity
+			android:label="@string/display_view"
+			android:name=".Display" />
 	</application>
 
 </manifest>

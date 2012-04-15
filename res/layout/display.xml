@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <TextView
+        android:id="@+id/space1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight=".05"
+        android:text="@string/space" />
+
+    <ScrollView
+        android:id="@+id/display_scroller"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".6"
+        android:fadeScrollbars="false"
+        android:fadingEdge="none">
+
+        <TextView
+            android:id="@+id/test_output"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="@string/space" />
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/space2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight=".05"
+        android:text="@string/space" />
+    
+    <Button
+        android:id="@+id/display_back_button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".15"
+        android:text="@string/back"
+        android:textSize="35sp" />
+
+</LinearLayout>

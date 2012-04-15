@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,7 +47,10 @@ public class Login extends Activity implements OnClickListener {
 			Toast.makeText(this, "Incorrect username or password.", Toast.LENGTH_SHORT).show();
 		} else {
 			Toast.makeText(this, "Welcome, " + response, Toast.LENGTH_SHORT).show();
-			//Call next activity
+			Intent i = new Intent(this, Display.class);
+			i.putExtra("com.shreyaschand.MEDIC.Doctor.user", uname);
+			startActivity(i);
+			finish();
 		}
 	}
 }

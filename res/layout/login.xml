@@ -77,13 +77,5 @@
 		android:layout_height="wrap_content"
 		android:layout_weight=".15"
 		android:text="@string/space" />
-	
-	<Button
-        android:id="@+id/about_back_button"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight=".07"
-        android:text="@string/back"
-		android:textSize="35sp"  />
 
 </LinearLayout>
