@@ -18,7 +18,6 @@ public class Display extends Activity implements OnClickListener {
 
 	private TextView output = null;
 	private ScrollView scroller = null;
-	private Socket socket = null;
 	private String user;
 
 	public void onCreate(Bundle savedInstanceState) {
@@ -33,54 +32,61 @@ public class Display extends Activity implements OnClickListener {
 
 	public void onStart() {
 		super.onStart();
-		new ConnectSocket().execute();
+		new SocketCommunicator().execute();
 	}
 
 	public void onClick(View arg0) {
 		finish();
 	}
 
-	private class ConnectSocket extends AsyncTask<Void, String, Boolean> {
+//	private class ConnectSocket extends AsyncTask<Void, String, Boolean> {
+//
+//		protected Boolean doInBackground(Void... params) {
+//			try {
+//				publishProgress("Establishing connection...\n");
+//				socket = new Socket("chands.dyndns-server.com", 1028);
+//				publishProgress("Connected.\n");
+//				return true;
+//			} catch (IOException e) {return false;}
+//		}
+//
+//		protected void onProgressUpdate(String... updates) {
+//			output.append(updates[0]);
+//			scroller.fullScroll(ScrollView.FOCUS_DOWN);
+//		}
+//
+//		protected void onPostExecute(Boolean result) {
+//			if (result) {
+//				new SocketCommunicator().execute();
+//			} else {
+//				output.append("Error connecting.");
+//				scroller.fullScroll(ScrollView.FOCUS_DOWN);
+//			}
+//		}
+//	}
 
+	private class SocketCommunicator extends AsyncTask<Void, String, Boolean> {
 		protected Boolean doInBackground(Void... params) {
 			try {
 				publishProgress("Establishing connection...\n");
-				socket = new Socket("chands.dyndns-server.com", 1028);
-				publishProgress("Connected.\n");
-				return true;
-			} catch (IOException e) {return false;}
-		}
-
-		protected void onProgressUpdate(String... updates) {
-			output.append(updates[0]);
-			scroller.fullScroll(ScrollView.FOCUS_DOWN);
-		}
-
-		protected void onPostExecute(Boolean result) {
-			if (result) {
-				new SocketCommunicator().execute(socket);
-			} else {
-				output.append("Error connecting.");
-				scroller.fullScroll(ScrollView.FOCUS_DOWN);
-			}
-		}
-	}
-
-	private class SocketCommunicator extends AsyncTask<Socket, String, Boolean> {
-		protected Boolean doInBackground(Socket... socket) {
-			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						socket[0].getInputStream()));
-				PrintWriter out = new PrintWriter(socket[0].getOutputStream());
+				Socket socket = new Socket("chands.dyndns-server.com", 1028);
+				BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				PrintWriter out = new PrintWriter(socket.getOutputStream());
 				out.println("$DOC$" + user);
 				out.flush();
-				out.close();
 				String message = in.readLine();
+				if(message.equals("okay")){
+					publishProgress("Connected.\n");
+				}
+				message = in.readLine();
 				while (message != null) {
 					publishProgress(new String[] { message });
 					message = in.readLine();
 				}
-			} catch (IOException e) {return false;}
+			} catch (IOException e) {
+				e.printStackTrace();
+				return false;
+			}
 			return true;
 		}
 
