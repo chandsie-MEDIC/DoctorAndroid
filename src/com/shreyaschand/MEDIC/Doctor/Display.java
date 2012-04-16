@@ -39,32 +39,6 @@ public class Display extends Activity implements OnClickListener {
 		finish();
 	}
 
-//	private class ConnectSocket extends AsyncTask<Void, String, Boolean> {
-//
-//		protected Boolean doInBackground(Void... params) {
-//			try {
-//				publishProgress("Establishing connection...\n");
-//				socket = new Socket("chands.dyndns-server.com", 1028);
-//				publishProgress("Connected.\n");
-//				return true;
-//			} catch (IOException e) {return false;}
-//		}
-//
-//		protected void onProgressUpdate(String... updates) {
-//			output.append(updates[0]);
-//			scroller.fullScroll(ScrollView.FOCUS_DOWN);
-//		}
-//
-//		protected void onPostExecute(Boolean result) {
-//			if (result) {
-//				new SocketCommunicator().execute();
-//			} else {
-//				output.append("Error connecting.");
-//				scroller.fullScroll(ScrollView.FOCUS_DOWN);
-//			}
-//		}
-//	}
-
 	private class SocketCommunicator extends AsyncTask<Void, String, Boolean> {
 		protected Boolean doInBackground(Void... params) {
 			try {
