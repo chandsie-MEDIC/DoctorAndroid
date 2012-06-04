@@ -69,18 +69,17 @@ public class Display extends Activity implements OnClickListener {
 	private class SocketCommunicator extends AsyncTask<Socket, String, Boolean> {
 		protected Boolean doInBackground(Socket... socket) {
 			try {
-				BufferedReader in = new BufferedReader(new InputStreamReader(
-						socket[0].getInputStream()));
+				BufferedReader in = new BufferedReader(new InputStreamReader(socket[0].getInputStream()));
 				PrintWriter out = new PrintWriter(socket[0].getOutputStream());
 				out.println("$DOC$" + user);
 				out.flush();
-				out.close();
+//				out.close();
 				String message = in.readLine();
 				while (message != null) {
 					publishProgress(new String[] { message });
 					message = in.readLine();
 				}
-			} catch (IOException e) {return false;}
+			} catch (IOException e) {e.printStackTrace();return false;}
 			return true;
 		}
 
