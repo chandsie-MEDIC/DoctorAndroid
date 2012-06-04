@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 import android.app.Activity;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +23,11 @@ public class Display extends Activity implements OnClickListener {
 	private ScrollView scroller = null;
 	private Socket socket = null;
 	private String user;
-
+	ArrayList<String> data;
+	
+	private SoundPool sounds;
+	private int thumpy;
+	
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.display);
@@ -74,9 +81,11 @@ public class Display extends Activity implements OnClickListener {
 				out.println("$DOC$" + user);
 				out.flush();
 //				out.close();
+				data = new ArrayList<String>(2700);
 				String message = in.readLine();
 				while (message != null) {
 					publishProgress(new String[] { message });
+					data.add(message);
 					message = in.readLine();
 				}
 			} catch (IOException e) {e.printStackTrace();return false;}
@@ -90,13 +99,37 @@ public class Display extends Activity implements OnClickListener {
 		
 		protected void onPostExecute(Boolean result) {
 			if(result) {
-				output.append("\nConnection closed.");
+				output.append("\nConnection closed.\nNow Playing Sample...\n");
 				scroller.fullScroll(ScrollView.FOCUS_DOWN);
+				new SamplePlayer().execute();
 			}else {
 				output.append("\nConnection lost unexepectedly.");
 				scroller.fullScroll(ScrollView.FOCUS_DOWN);
 			}
 		}
+	}
+
+	private class SamplePlayer extends AsyncTask<Void, Void, Void> {
+		protected Void doInBackground(Void... nothing) {
+			sounds = new SoundPool(4, AudioManager.STREAM_MUSIC, 0);
+			thumpy = sounds.load(getApplicationContext(), R.raw.beat, 1);
+			int interval = 5000/data.size();
+			
+			for(int i = 0; i != data.size(); i++) {
+				if(!data.get(i).equals("0")) {
+					sounds.play(thumpy, 1.0f, 1.0f, 0, 0, 1.0f);
+				}
+				long time = System.currentTimeMillis();
+				while(System.currentTimeMillis() - time < interval) {}
+			}
+			
+			
+			return null;			
+		}
+
+		protected void onProgressUpdate(Void... update) {}
+		
+		protected void onPostExecute(Void result) {}
 	}
 
 }
