@@ -23,8 +23,8 @@ public class Display extends Activity implements OnClickListener {
 	private ScrollView scroller = null;
 	private Socket socket = null;
 	private String user;
-	ArrayList<String> data;
-	
+	private ArrayList<String> data;
+	private TextView button;
 	private SoundPool sounds;
 	private int thumpy;
 	
@@ -32,7 +32,10 @@ public class Display extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.display);
 
-		findViewById(R.id.display_back_button).setOnClickListener(this);
+		button = ((TextView) findViewById(R.id.display_back_button));
+		button.setText("Play");
+		button.setEnabled(false);
+		
 		output = ((TextView) findViewById(R.id.test_output));
 		scroller = (ScrollView) findViewById(R.id.display_scroller);
 		user = getIntent().getExtras().getString("com.shreyaschand.MEDIC.Doctor.user");
@@ -44,7 +47,7 @@ public class Display extends Activity implements OnClickListener {
 	}
 
 	public void onClick(View arg0) {
-		finish();
+		new SamplePlayer().execute();
 	}
 
 	private class ConnectSocket extends AsyncTask<Void, String, Boolean> {
@@ -80,7 +83,6 @@ public class Display extends Activity implements OnClickListener {
 				PrintWriter out = new PrintWriter(socket[0].getOutputStream());
 				out.println("$DOC$" + user);
 				out.flush();
-//				out.close();
 				data = new ArrayList<String>(2700);
 				String message = in.readLine();
 				while (message != null) {
@@ -99,9 +101,19 @@ public class Display extends Activity implements OnClickListener {
 		
 		protected void onPostExecute(Boolean result) {
 			if(result) {
-				output.append("\nConnection closed.\nNow Playing Sample...\n");
+				output.append("\nConnection closed.\nNow Ready to Play Sample...\n");
 				scroller.fullScroll(ScrollView.FOCUS_DOWN);
-				new SamplePlayer().execute();
+								
+				 for(int i = 0; i != data.size(); i++) {
+						String curr = data.get(i);
+						if(!curr.equals("0")) {
+							for(int j = i+1; !data.get(j).equals("0"); j++) {
+								data.set(j, "0");
+							}
+						}		
+					}
+				
+				button.setEnabled(true);
 			}else {
 				output.append("\nConnection lost unexepectedly.");
 				scroller.fullScroll(ScrollView.FOCUS_DOWN);
